@@ -213,7 +213,7 @@
         .btn:hover { background-color: #5c6c59; }
 
         /* RSVP Form */
-        #rsvp { background-color: var(--primary-color); color: white; }
+        #rsvp { background-color: var(--primary-color); color: white; min-height: auto; }
         form { display: flex; flex-direction: column; width: 100%; max-width: 400px; margin: 0 auto; }
         input, select, textarea {
             padding: 12px; margin-bottom: 15px; border: none; border-radius: 8px; font-family: inherit; width: 100%;
@@ -222,6 +222,55 @@
             background-color: var(--accent-color); color: white; border: none; padding: 15px; font-size: 1rem; border-radius: 8px; cursor: pointer; font-weight: bold;
         }
         button[type="submit"]:hover { background-color: #b8972e; }
+
+        /* ==========================================
+           BAHAGIAN UCAPAN & DOA (GUESTBOOK)
+        ========================================== */
+        #ucapan-section {
+            background-color: var(--secondary-color);
+            padding: 60px 20px;
+            min-height: auto;
+        }
+        .ucapan-box {
+            max-width: 500px;
+            width: 100%;
+            margin: 20px auto 0;
+            max-height: 420px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+        /* Custom scrollbar untuk kotak ucapan */
+        .ucapan-box::-webkit-scrollbar {
+            width: 6px;
+        }
+        .ucapan-box::-webkit-scrollbar-thumb {
+            background: #c3cec0;
+            border-radius: 10px;
+        }
+        .ucapan-card {
+            background-color: #ffffff;
+            border-left: 4px solid var(--accent-color);
+            border-radius: 10px;
+            padding: 16px 20px;
+            margin-bottom: 15px;
+            text-align: left;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .ucapan-nama {
+            font-weight: bold;
+            font-size: 0.95rem;
+            color: var(--primary-color);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .ucapan-teks {
+            font-size: 0.9rem;
+            color: #555555;
+            line-height: 1.5;
+            font-style: italic;
+        }
 
         /* Floating Music Button */
         #music-toggle {
@@ -280,7 +329,7 @@
         <div class="cover-card">
             <h2>Walimatul Urus</h2>
             <h1>Hannani<br>&<br>Aiman</h1>
-            <p style="font-size: 0.9rem; letter-spacing: 1px;">23 JANUARI 2027</p>
+            <p style="font-size: 0.9rem; letter-spacing: 1px;">23 JANUARI 2026</p>
             
             <div class="guest-box">
                 <p>Kepada YBhg. Tan Sri / Puan Sri / Dato' / Datin / Tuan / Puan / Encik / Cik:</p>
@@ -306,7 +355,7 @@
     <section id="beranda" class="fade-in">
         <h2>Walimatul Urus</h2>
         <h1>Hannani<br>&<br>Aiman</h1>
-        <p>Sabtu, 23 Januari 2027</p>
+        <p>Sabtu, 23 Januari 2026</p>
     </section>
 
     <!-- COUNTDOWN -->
@@ -366,7 +415,7 @@
     <!-- RSVP -->
     <section id="rsvp" class="fade-in">
         <h2 style="margin-bottom: 10px;">Sahkan Kehadiran (RSVP)</h2>
-        <p style="margin-bottom: 30px;">Sila maklumkan kehadiran anda sebelum 15 Januari 2027</p>
+        <p style="margin-bottom: 30px;">Sila maklumkan kehadiran anda sebelum 15 Januari 2026</p>
         
         <form name="submit-to-google-sheet" id="rsvp-form">
             <input type="text" name="Nama" placeholder="Nama Penuh" required>
@@ -385,11 +434,22 @@
                 <option value="4">4 Orang</option>
             </select>
 
-            <textarea name="Ucapan" rows="3" placeholder="Tinggalkan ucapan untuk pengantin... (Pilihan)"></textarea>
+            <textarea name="Ucapan" id="ucapan-input" rows="3" placeholder="Tinggalkan ucapan untuk pengantin... (Pilihan)"></textarea>
             
             <button type="submit" id="submit-btn">Hantar RSVP</button>
             <p id="success-msg" style="display: none; margin-top: 15px; color: var(--accent-color); font-weight: bold;">Terima kasih, RSVP anda telah direkodkan!</p>
         </form>
+    </section>
+
+    <!-- BAHAGIAN DOA & UCAPAN TETAMU -->
+    <section id="ucapan-section" class="fade-in">
+        <h2 style="color: var(--primary-color); margin-bottom: 10px;">Doa & Ucapan</h2>
+        <p style="font-size: 0.9rem; color: #666; margin-bottom: 10px;">Titipan doa tulus daripada tetamu jemputan</p>
+        
+        <div class="ucapan-box" id="ucapan-list">
+            <!-- Senarai ucapan dari Google Sheets akan dipaparkan di sini -->
+            <p style="color: #888; font-size: 0.9rem; margin-top: 20px;">Sedang memuatkan ucapan...</p>
+        </div>
     </section>
 
     <!-- BOTTOM NAV -->
@@ -403,7 +463,10 @@
 
     <!-- SCRIPT -->
     <script>
-        // Membaca Nama Tetamu daripada URL (cth: domain.com/?to=Ahmad+Faizal)
+        // URL Google Apps Script Web App
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbzmxLWIAAeUc_UwNfA0XQD7SliDt5oCRQ70fjSTsfnT91fURBOPbhvT_Cvq815HJrEz/exec';
+
+        // Membaca Nama Tetamu daripada URL (?to=Ahmad+Faizal)
         const urlParams = new URLSearchParams(window.location.search);
         const guestName = urlParams.get('to');
         if (guestName) {
@@ -429,11 +492,10 @@
         let isAutoScrolling = true;
 
         openBtn.addEventListener('click', () => {
-            // Tutup overlay cover
             coverOverlay.classList.add('opened');
             document.body.classList.remove('no-scroll');
 
-            // Mainkan muzik serta-merta
+            // Mainkan muzik
             music.volume = 0.5;
             music.play().then(() => {
                 isPlaying = true;
@@ -441,7 +503,7 @@
                 musicIcon.classList.add('fa-pause');
             }).catch(e => console.log('Playback error:', e));
 
-            // Mulakan auto-scroll perlahan
+            // Auto-scroll perlahan
             setTimeout(() => {
                 let scrollInterval = setInterval(() => {
                     if (isAutoScrolling && window.scrollY + window.innerHeight < document.body.scrollHeight - 10) {
@@ -457,7 +519,7 @@
             }, 800);
         });
 
-        // Toggle Music Button
+        // Toggle Muzik
         function toggleMusic() {
             if (isPlaying) {
                 music.pause();
@@ -472,7 +534,7 @@
         }
 
         // Countdown Timer
-        const countDownDate = new Date("Jan 23, 2027 11:00:00").getTime();
+        const countDownDate = new Date("Jan 23, 2026 11:00:00").getTime();
         const x = setInterval(function() {
             const now = new Date().getTime();
             const distance = countDownDate - now;
@@ -507,8 +569,49 @@
             }
         }
 
-        // Google Sheets Integration
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbzmxLWIAAeUc_UwNfA0XQD7SliDt5oCRQ70fjSTsfnT91fURBOPbhvT_Cvq815HJrEz/exec';
+        // ==========================================
+        // FUNGSI MEMAPARKAN DOA & UCAPAN
+        // ==========================================
+        function sanitize(str) {
+            const temp = document.createElement('div');
+            temp.textContent = str;
+            return temp.innerHTML;
+        }
+
+        function muatTurunUcapan() {
+            const container = document.getElementById('ucapan-list');
+
+            fetch(scriptURL)
+                .then(res => res.json())
+                .then(data => {
+                    if (!Array.isArray(data) || data.length === 0) {
+                        container.innerHTML = '<p style="color: #777; font-size: 0.9rem; font-style: italic; margin-top: 20px;">Belum ada ucapan lagi. Jadilah yang pertama mengirim doa & ucapan!</p>';
+                        return;
+                    }
+
+                    container.innerHTML = '';
+                    data.forEach(item => {
+                        const card = document.createElement('div');
+                        card.className = 'ucapan-card';
+                        card.innerHTML = `
+                            <div class="ucapan-nama"><i class="fas fa-heart" style="color: var(--accent-color); font-size: 0.8rem;"></i> ${sanitize(item.nama)}</div>
+                            <div class="ucapan-teks">“${sanitize(item.ucapan)}”</div>
+                        `;
+                        container.appendChild(card);
+                    });
+                })
+                .catch(err => {
+                    console.error('Ralat membaca ucapan:', err);
+                    container.innerHTML = '<p style="color: #999; font-size: 0.9rem;">Ruangan ucapan sedang dikemaskini...</p>';
+                });
+        }
+
+        // Muat turun ucapan serta-merta apabila laman dibuka
+        window.addEventListener('DOMContentLoaded', muatTurunUcapan);
+
+        // ==========================================
+        // SUBMIT BORANG RSVP KE GOOGLE SHEETS
+        // ==========================================
         const form = document.forms['submit-to-google-sheet'];
         const btn = document.getElementById('submit-btn');
         const msg = document.getElementById('success-msg');
@@ -516,16 +619,29 @@
         form.addEventListener('submit', e => {
             e.preventDefault();
             btn.innerHTML = "Menghantar..."; 
+            btn.disabled = true;
+
+            const ucapanIsi = document.getElementById('ucapan-input').value.trim();
             
             fetch(scriptURL, { method: 'POST', body: new FormData(form)})
                 .then(response => {
                     msg.style.display = "block";
                     btn.innerHTML = "Hantar RSVP";
+                    btn.disabled = false;
                     form.reset();
                     togglePax(); 
-                    setTimeout(function(){ msg.style.display = "none"; }, 5000); 
+                    setTimeout(function(){ msg.style.display = "none"; }, 5000);
+
+                    // Jika tetamu ada isi ucapan, kemaskini senarai ucapan serta-merta
+                    if (ucapanIsi !== "") {
+                        setTimeout(muatTurunUcapan, 1500);
+                    }
                 })
-                .catch(error => console.error('Error!', error.message));
+                .catch(error => {
+                    console.error('Error!', error.message);
+                    btn.innerHTML = "Hantar RSVP";
+                    btn.disabled = false;
+                });
         });
     </script>
 </body>
