@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Walimatul Urus | Hannani & Aiman</title>
-    <!-- FontAwesome untuk Icon Navbar -->
+    <!-- FontAwesome untuk Icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Gaya Asas (Sage Green & Cream) */
         :root {
             --primary-color: #7b8e78; /* Sage Green */
             --secondary-color: #f7f6ec; /* Cream */
@@ -27,8 +26,12 @@
             background-color: var(--secondary-color);
             color: var(--text-dark);
             text-align: center;
-            /* Tambah padding bawah supaya kandungan tak tertutup dengan bottom nav */
             padding-bottom: 70px; 
+            scroll-behavior: smooth;
+        }
+
+        body.no-scroll {
+            overflow: hidden;
         }
 
         h1, h2, h3 {
@@ -36,6 +39,100 @@
             font-weight: normal;
         }
 
+        /* ==========================================
+           FULLSCREEN OPENING COVER (MODAL)
+        ========================================== */
+        #cover-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(45, 55, 43, 0.75), rgba(45, 55, 43, 0.75)), 
+                        url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover;
+            color: var(--text-light);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            z-index: 99999;
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        #cover-overlay.opened {
+            opacity: 0;
+            transform: translateY(-100%);
+            pointer-events: none;
+        }
+
+        .cover-card {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            padding: 40px 25px;
+            border-radius: 20px;
+            max-width: 360px;
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .cover-card h2 {
+            font-size: 1rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            color: var(--accent-color);
+        }
+
+        .cover-card h1 {
+            font-size: 2.5rem;
+            font-style: italic;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .guest-box {
+            margin: 20px 0;
+            padding: 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 0.9rem;
+        }
+
+        .guest-name {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #fff;
+            margin-top: 5px;
+        }
+
+        .btn-open {
+            background-color: var(--accent-color);
+            color: #fff;
+            border: none;
+            padding: 12px 28px;
+            font-size: 0.95rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* ==========================================
+           PAGE SECTIONS
+        ========================================== */
         section {
             padding: 60px 20px;
             min-height: 100vh;
@@ -45,9 +142,9 @@
             align-items: center;
         }
 
-        /* Banner Utama */
         #beranda {
-            background: linear-gradient(rgba(123, 142, 120, 0.8), rgba(123, 142, 120, 0.8)), url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover;
+            background: linear-gradient(rgba(123, 142, 120, 0.8), rgba(123, 142, 120, 0.8)), 
+                        url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover;
             color: var(--text-light);
         }
 
@@ -55,7 +152,37 @@
         #beranda h1 { font-size: 3.5rem; margin-bottom: 20px; font-style: italic; }
         #beranda p { font-size: 1.1rem; letter-spacing: 1px; }
 
-        /* Bahagian Info */
+        /* Countdown Timer */
+        #countdown-section {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 40px 20px;
+            min-height: auto;
+        }
+        .countdown-container {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 15px;
+        }
+        .time-box {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 12px;
+            border-radius: 10px;
+            min-width: 65px;
+        }
+        .time-box span {
+            display: block;
+            font-size: 1.6rem;
+            font-weight: bold;
+        }
+        .time-box p {
+            font-size: 0.75rem;
+            margin-top: 4px;
+            text-transform: uppercase;
+        }
+
+        /* Info */
         #info { background-color: var(--secondary-color); }
         .bismillah { font-size: 2rem; margin-bottom: 20px; color: var(--primary-color); }
         .parents { font-size: 1.3rem; font-weight: bold; margin: 15px 0; color: var(--primary-color); }
@@ -96,7 +223,27 @@
         }
         button[type="submit"]:hover { background-color: #b8972e; }
 
-        /* Bottom Navigation Bar */
+        /* Floating Music Button */
+        #music-toggle {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background-color: var(--accent-color);
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            cursor: pointer;
+            z-index: 999;
+            font-size: 1.1rem;
+            border: none;
+        }
+
+        /* Bottom Nav */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -126,16 +273,54 @@
         .fade-in.visible { opacity: 1; transform: translateY(0); }
     </style>
 </head>
-<body>
+<body class="no-scroll">
 
-    <!-- Bahagian Utama -->
+    <!-- COVER SCREEN (OVERLAY AWAL) -->
+    <div id="cover-overlay">
+        <div class="cover-card">
+            <h2>Walimatul Urus</h2>
+            <h1>Hannani<br>&<br>Aiman</h1>
+            <p style="font-size: 0.9rem; letter-spacing: 1px;">23 JANUARI 2026</p>
+            
+            <div class="guest-box">
+                <p>Kepada YBhg. Tan Sri / Puan Sri / Dato' / Datin / Tuan / Puan / Encik / Cik:</p>
+                <div class="guest-name" id="guest-name-slot">Tetamu Jemputan</div>
+            </div>
+
+            <button class="btn-open" id="open-btn">
+                <i class="fas fa-envelope-open"></i> Buka Undangan
+            </button>
+        </div>
+    </div>
+
+    <!-- AUDIO PLAYER -->
+    <audio id="bg-music" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <button id="music-toggle" onclick="toggleMusic()">
+        <i class="fas fa-play" id="music-icon"></i>
+    </button>
+
+    <!-- BAHAGIAN UTAMA -->
     <section id="beranda" class="fade-in">
         <h2>Walimatul Urus</h2>
         <h1>Hannani<br>&<br>Aiman</h1>
         <p>Sabtu, 23 Januari 2026</p>
     </section>
 
-    <!-- Info Ibu Bapa & Jemputan -->
+    <!-- COUNTDOWN -->
+    <section id="countdown-section" class="fade-in">
+        <h2>Menghitung Hari</h2>
+        <div class="countdown-container">
+            <div class="time-box"><span id="days">00</span><p>Hari</p></div>
+            <div class="time-box"><span id="hours">00</span><p>Jam</p></div>
+            <div class="time-box"><span id="minutes">00</span><p>Minit</p></div>
+            <div class="time-box"><span id="seconds">00</span><p>Saat</p></div>
+        </div>
+    </section>
+
+    <!-- INFO IBU BAPA & JEMPUTAN -->
     <section id="info" class="fade-in">
         <div class="bismillah">﷽</div>
         <p>Dengan penuh kesyukuran ke hadrat Ilahi, kami</p>
@@ -153,7 +338,7 @@
         <p>Semoga dengan kehadiran dan doa restu para tetamu akan menyerikan lagi majlis kami dan diberkati Allah SWT.</p>
     </section>
 
-    <!-- Aturcara Majlis -->
+    <!-- ATURCARA -->
     <section id="aturcara" class="fade-in">
         <h2 style="margin-bottom: 20px; color: var(--primary-color);">Aturcara Majlis</h2>
         <div class="box">
@@ -167,19 +352,18 @@
         </div>
     </section>
 
-    <!-- Lokasi -->
+    <!-- LOKASI -->
     <section id="lokasi" class="fade-in">
         <h2 style="margin-bottom: 20px; color: var(--primary-color);">Lokasi Majlis</h2>
         <div class="box">
             <h3 style="margin-bottom: 10px;">BIZMILLA @ GAMUDA GARDENS</h3>
             <p>Persiaran Gamuda Gardens Gamuda Gardens, 48050 Rawang, Selangor</p>
-            <!-- Sila tukar pautan waze/google maps ini ke alamat sebenar -->
             <a href="https://waze.com/ul?q=BIZMILLA+@+GAMUDA+GARDENS&navigate=yes" target="_blank" class="btn"><i class="fab fa-waze"></i> Buka di Waze</a>
-            <a href="https://www.google.com/maps/search/?api=1&query=BIZMILLA+@+GAMUDA+GARDENS" target="_blank" class="btn"><i class="fas fa-map-marker-alt"></i> Buka di Google Maps</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=BIZMILLA+GAMUDA+GARDENS+Rawang" target="_blank" class="btn"><i class="fas fa-map-marker-alt"></i> Buka di Google Maps</a>
         </div>
     </section>
 
-    <!-- RSVP (Pautkan dengan Google Sheets) -->
+    <!-- RSVP -->
     <section id="rsvp" class="fade-in">
         <h2 style="margin-bottom: 10px;">Sahkan Kehadiran (RSVP)</h2>
         <p style="margin-bottom: 30px;">Sila maklumkan kehadiran anda sebelum 15 Januari 2026</p>
@@ -208,7 +392,7 @@
         </form>
     </section>
 
-    <!-- Bottom Navigation Bar -->
+    <!-- BOTTOM NAV -->
     <div class="bottom-nav">
         <a href="#beranda" class="active"><i class="fas fa-home"></i>Utama</a>
         <a href="#info"><i class="fas fa-info-circle"></i>Info</a>
@@ -217,8 +401,15 @@
         <a href="#rsvp"><i class="fas fa-envelope-open-text"></i>RSVP</a>
     </div>
 
-    <!-- Script Utama -->
+    <!-- SCRIPT -->
     <script>
+        // Membaca Nama Tetamu daripada URL (cth: domain.com/?to=Ahmad+Faizal)
+        const urlParams = new URLSearchParams(window.location.search);
+        const guestName = urlParams.get('to');
+        if (guestName) {
+            document.getElementById('guest-name-slot').innerText = guestName;
+        }
+
         // Animasi Scroll (Fade In)
         const observer = new IntersectionObserver(entries => {
             entries.forEach(entry => {
@@ -229,7 +420,80 @@
         });
         document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-        // Hide/Show Bilangan Tetamu bergantung kepada jawapan Hadir/Tidak
+        // Handler Butang Buka Undangan
+        const openBtn = document.getElementById('open-btn');
+        const coverOverlay = document.getElementById('cover-overlay');
+        const music = document.getElementById('bg-music');
+        const musicIcon = document.getElementById('music-icon');
+        let isPlaying = false;
+        let isAutoScrolling = true;
+
+        openBtn.addEventListener('click', () => {
+            // Tutup overlay cover
+            coverOverlay.classList.add('opened');
+            document.body.classList.remove('no-scroll');
+
+            // Mainkan muzik serta-merta
+            music.volume = 0.5;
+            music.play().then(() => {
+                isPlaying = true;
+                musicIcon.classList.remove('fa-play');
+                musicIcon.classList.add('fa-pause');
+            }).catch(e => console.log('Playback error:', e));
+
+            // Mulakan auto-scroll perlahan
+            setTimeout(() => {
+                let scrollInterval = setInterval(() => {
+                    if (isAutoScrolling && window.scrollY + window.innerHeight < document.body.scrollHeight - 10) {
+                        window.scrollBy(0, 2);
+                    } else {
+                        clearInterval(scrollInterval);
+                    }
+                }, 20);
+
+                window.addEventListener('wheel', () => isAutoScrolling = false, { once: true });
+                window.addEventListener('touchstart', () => isAutoScrolling = false, { once: true });
+                window.addEventListener('mousedown', () => isAutoScrolling = false, { once: true });
+            }, 800);
+        });
+
+        // Toggle Music Button
+        function toggleMusic() {
+            if (isPlaying) {
+                music.pause();
+                musicIcon.classList.remove('fa-pause');
+                musicIcon.classList.add('fa-play');
+            } else {
+                music.play();
+                musicIcon.classList.remove('fa-play');
+                musicIcon.classList.add('fa-pause');
+            }
+            isPlaying = !isPlaying;
+        }
+
+        // Countdown Timer
+        const countDownDate = new Date("Jan 23, 2026 11:00:00").getTime();
+        const x = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = countDownDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerHTML = days < 10 ? "0" + days : days;
+            document.getElementById("hours").innerHTML = hours < 10 ? "0" + hours : hours;
+            document.getElementById("minutes").innerHTML = minutes < 10 ? "0" + minutes : minutes;
+            document.getElementById("seconds").innerHTML = seconds < 10 ? "0" + seconds : seconds;
+
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("countdown-section").innerHTML = "<h2>Majlis Sedang Berlangsung</h2>";
+            }
+        }, 1000);
+
+        // RSVP Toggle Pax
         function togglePax() {
             var kehadiran = document.getElementById("kehadiran").value;
             var pax = document.getElementById("pax");
@@ -243,29 +507,26 @@
             }
         }
 
-        // ==========================================
-        // SCRIPT GOOGLE SHEETS RSVP
-        // ==========================================
-        // Masukkan URL Google Apps Script Web App di bawah:
+        // Google Sheets Integration
         const scriptURL = 'https://script.google.com/macros/s/AKfycbzmxLWIAAeUc_UwNfA0XQD7SliDt5oCRQ70fjSTsfnT91fURBOPbhvT_Cvq815HJrEz/exec';
-        const form = document.forms['submit-to-google-sheet']
+        const form = document.forms['submit-to-google-sheet'];
         const btn = document.getElementById('submit-btn');
         const msg = document.getElementById('success-msg');
 
         form.addEventListener('submit', e => {
-            e.preventDefault()
-            btn.innerHTML = "Menghantar..."; // Tunjuk status loading
+            e.preventDefault();
+            btn.innerHTML = "Menghantar..."; 
             
             fetch(scriptURL, { method: 'POST', body: new FormData(form)})
                 .then(response => {
                     msg.style.display = "block";
                     btn.innerHTML = "Hantar RSVP";
                     form.reset();
-                    togglePax(); // Sembunyikan pax semula
-                    setTimeout(function(){ msg.style.display = "none"; }, 5000); // Padam mesej selepas 5 saat
+                    togglePax(); 
+                    setTimeout(function(){ msg.style.display = "none"; }, 5000); 
                 })
-                .catch(error => console.error('Error!', error.message))
-        })
+                .catch(error => console.error('Error!', error.message));
+        });
     </script>
 </body>
 </html>
