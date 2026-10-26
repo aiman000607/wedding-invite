@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Walimatul Urus | Hannani & Aiman</title>
+    <!-- FontAwesome untuk Icon Navbar -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Gaya Asas (Sage Green & Cream) */
+        :root {
+            --primary-color: #7b8e78; /* Sage Green */
+            --secondary-color: #f7f6ec; /* Cream */
+            --text-dark: #333333;
+            --text-light: #ffffff;
+            --accent-color: #d4af37; /* Gold */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--secondary-color);
+            color: var(--text-dark);
+            text-align: center;
+            /* Tambah padding bawah supaya kandungan tak tertutup dengan bottom nav */
+            padding-bottom: 70px; 
+        }
+
+        h1, h2, h3 {
+            font-family: 'Georgia', serif;
+            font-weight: normal;
+        }
+
+        section {
+            padding: 60px 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Banner Utama */
+        #beranda {
+            background: linear-gradient(rgba(123, 142, 120, 0.8), rgba(123, 142, 120, 0.8)), url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover;
+            color: var(--text-light);
+        }
+
+        #beranda h2 { font-size: 1.2rem; letter-spacing: 3px; margin-bottom: 20px; text-transform: uppercase; }
+        #beranda h1 { font-size: 3.5rem; margin-bottom: 20px; font-style: italic; }
+        #beranda p { font-size: 1.1rem; letter-spacing: 1px; }
+
+        /* Bahagian Info */
+        #info { background-color: var(--secondary-color); }
+        .bismillah { font-size: 2rem; margin-bottom: 20px; color: var(--primary-color); }
+        .parents { font-size: 1.3rem; font-weight: bold; margin: 15px 0; color: var(--primary-color); }
+        .divider { width: 50px; height: 2px; background-color: var(--accent-color); margin: 30px auto; }
+        
+        /* Lokasi & Aturcara */
+        #lokasi, #aturcara { background-color: #ffffff; }
+        .box {
+            background-color: var(--secondary-color);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            max-width: 500px;
+            margin: 20px auto;
+            width: 100%;
+        }
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 25px;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+        .btn:hover { background-color: #5c6c59; }
+
+        /* RSVP Form */
+        #rsvp { background-color: var(--primary-color); color: white; }
+        form { display: flex; flex-direction: column; width: 100%; max-width: 400px; margin: 0 auto; }
+        input, select, textarea {
+            padding: 12px; margin-bottom: 15px; border: none; border-radius: 8px; font-family: inherit; width: 100%;
+        }
+        button[type="submit"] {
+            background-color: var(--accent-color); color: white; border: none; padding: 15px; font-size: 1rem; border-radius: 8px; cursor: pointer; font-weight: bold;
+        }
+        button[type="submit"]:hover { background-color: #b8972e; }
+
+        /* Bottom Navigation Bar */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #ffffff;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            z-index: 1000;
+        }
+        .bottom-nav a {
+            text-decoration: none;
+            color: #888888;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 0.75rem;
+            transition: color 0.3s;
+        }
+        .bottom-nav a i { font-size: 1.2rem; margin-bottom: 4px; }
+        .bottom-nav a:hover, .bottom-nav a.active { color: var(--primary-color); }
+
+        /* Animation */
+        .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+    <!-- Bahagian Utama -->
+    <section id="beranda" class="fade-in">
+        <h2>Walimatul Urus</h2>
+        <h1>Hannani<br>&<br>Aiman</h1>
+        <p>Sabtu, 23 Januari 2026</p>
+    </section>
+
+    <!-- Info Ibu Bapa & Jemputan -->
+    <section id="info" class="fade-in">
+        <div class="bismillah">﷽</div>
+        <p>Dengan penuh kesyukuran ke hadrat Ilahi, kami</p>
+        <div class="parents">
+            Ismail Bin Zun<br>&<br>Norfadhilah Binti Maulut
+        </div>
+        <p>berbesar hati menjemput Dato'/Datin/Tuan/Puan/Encik/Cik hadir ke majlis perkahwinan puteri kami,</p>
+        
+        <div class="divider"></div>
+        <h2 style="color: var(--primary-color); font-size: 2rem;">Nurul Hannani Binti Ismail</h2>
+        <p>bersama pasangannya</p>
+        <h2 style="color: var(--primary-color); font-size: 2rem;">Mohamad Aiman Bin Mohd Norijasmi</h2>
+        <div class="divider"></div>
+        
+        <p>Semoga dengan kehadiran dan doa restu para tetamu akan menyerikan lagi majlis kami dan diberkati Allah SWT.</p>
+    </section>
+
+    <!-- Aturcara Majlis -->
+    <section id="aturcara" class="fade-in">
+        <h2 style="margin-bottom: 20px; color: var(--primary-color);">Aturcara Majlis</h2>
+        <div class="box">
+            <p><strong>11:00 AM</strong> - Ketibaan Tetamu</p>
+            <hr style="border: 0.5px solid #ddd; margin: 15px 0;">
+            <p><strong>12:30 PM</strong> - Ketibaan Pengantin & Selawat</p>
+            <hr style="border: 0.5px solid #ddd; margin: 15px 0;">
+            <p><strong>1:00 PM</strong> - Sesi Bergambar & Makan Beradab</p>
+            <hr style="border: 0.5px solid #ddd; margin: 15px 0;">
+            <p><strong>4:00 PM</strong> - Majlis Bersurai</p>
+        </div>
+    </section>
+
+    <!-- Lokasi -->
+    <section id="lokasi" class="fade-in">
+        <h2 style="margin-bottom: 20px; color: var(--primary-color);">Lokasi Majlis</h2>
+        <div class="box">
+            <h3 style="margin-bottom: 10px;">BIZMILLA @ GAMUDA GARDENS</h3>
+            <p>Persiaran Gamuda Gardens Gamuda Gardens, 48050 Rawang, Selangor</p>
+            <!-- Sila tukar pautan waze/google maps ini ke alamat sebenar -->
+            <a href="https://ul.waze.com/ul?place=ChIJ5z8E1nlDzDERqVltGI_zJVY&ll=3.28280440%2C101.53816980&navigate=yes&utm_campaign=live_map&utm_source=waze_website&utm_medium=lm_share_location" target="_blank" class="btn"><i class="fab fa-waze"></i> Buka di Waze</a>
+            <a href="https://share.google/MBRAe1eAVhAEHIgph" target="_blank" class="btn"><i class="fas fa-map-marker-alt"></i> Buka di Google Maps</a>
+        </div>
+    </section>
+
+    <!-- RSVP (Pautkan dengan Google Sheets) -->
+    <section id="rsvp" class="fade-in">
+        <h2 style="margin-bottom: 10px;">Sahkan Kehadiran (RSVP)</h2>
+        <p style="margin-bottom: 30px;">Sila maklumkan kehadiran anda sebelum 15 Januari 2026</p>
+        
+        <form name="submit-to-google-sheet" id="rsvp-form">
+            <input type="text" name="Nama" placeholder="Nama Penuh" required>
+            <input type="tel" name="Telefon" placeholder="Nombor Telefon" required>
+            <select name="Kehadiran" id="kehadiran" required onchange="togglePax()">
+                <option value="" disabled selected>Adakah anda akan hadir?</option>
+                <option value="Hadir">Ya, Saya Hadir</option>
+                <option value="Tidak Hadir">Maaf, Tidak Dapat Hadir</option>
+            </select>
+            
+            <select name="Bilangan" id="pax" style="display: none;">
+                <option value="0" selected>Bilangan Tetamu</option>
+                <option value="1">1 Orang</option>
+                <option value="2">2 Orang</option>
+                <option value="3">3 Orang</option>
+                <option value="4">4 Orang</option>
+            </select>
+
+            <textarea name="Ucapan" rows="3" placeholder="Tinggalkan ucapan untuk pengantin... (Pilihan)"></textarea>
+            
+            <button type="submit" id="submit-btn">Hantar RSVP</button>
+            <p id="success-msg" style="display: none; margin-top: 15px; color: var(--accent-color); font-weight: bold;">Terima kasih, RSVP anda telah direkodkan!</p>
+        </form>
+    </section>
+
+    <!-- Bottom Navigation Bar -->
+    <div class="bottom-nav">
+        <a href="#beranda" class="active"><i class="fas fa-home"></i>Utama</a>
+        <a href="#info"><i class="fas fa-info-circle"></i>Info</a>
+        <a href="#aturcara"><i class="far fa-clock"></i>Aturcara</a>
+        <a href="#lokasi"><i class="fas fa-map-marked-alt"></i>Lokasi</a>
+        <a href="#rsvp"><i class="fas fa-envelope-open-text"></i>RSVP</a>
+    </div>
+
+    <!-- Script Utama -->
+    <script>
+        // Animasi Scroll (Fade In)
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Hide/Show Bilangan Tetamu bergantung kepada jawapan Hadir/Tidak
+        function togglePax() {
+            var kehadiran = document.getElementById("kehadiran").value;
+            var pax = document.getElementById("pax");
+            if (kehadiran === "Hadir") {
+                pax.style.display = "block";
+                pax.required = true;
+            } else {
+                pax.style.display = "none";
+                pax.required = false;
+                pax.value = "0";
+            }
+        }
+
+        // ==========================================
+        // SCRIPT GOOGLE SHEETS RSVP
+        // ==========================================
+        // Masukkan URL Google Apps Script Web App di bawah:
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbzmxLWIAAeUc_UwNfA0XQD7SliDt5oCRQ70fjSTsfnT91fURBOPbhvT_Cvq815HJrEz/exec';
+        const form = document.forms['submit-to-google-sheet']
+        const btn = document.getElementById('submit-btn');
+        const msg = document.getElementById('success-msg');
+
+        form.addEventListener('submit', e => {
+            e.preventDefault()
+            btn.innerHTML = "Menghantar..."; // Tunjuk status loading
+            
+            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+                .then(response => {
+                    msg.style.display = "block";
+                    btn.innerHTML = "Hantar RSVP";
+                    form.reset();
+                    togglePax(); // Sembunyikan pax semula
+                    setTimeout(function(){ msg.style.display = "none"; }, 5000); // Padam mesej selepas 5 saat
+                })
+                .catch(error => console.error('Error!', error.message))
+        })
+    </script>
+</body>
+</html>
