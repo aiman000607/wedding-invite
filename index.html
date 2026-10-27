@@ -6,6 +6,12 @@
     <title>Walimatul Urus | Hannani & Aiman</title>
     <!-- FontAwesome untuk Icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts (Playfair Display for Guest Names & Headings) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
     <style>
         :root {
             --primary-color: #7b8e78; /* Sage Green */
@@ -28,6 +34,7 @@
             text-align: center;
             padding-bottom: 70px; 
             scroll-behavior: smooth;
+            position: relative; /* Untuk membolehkan partikel bunga berterbangan */
         }
 
         body.no-scroll {
@@ -35,8 +42,35 @@
         }
 
         h1, h2, h3 {
-            font-family: 'Georgia', serif;
+            font-family: 'Playfair Display', serif;
             font-weight: normal;
+        }
+
+        /* ==========================================
+           PARTICLE / FLOWER ANIMATION (BACKGROUND)
+        ========================================== */
+        #particles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .particle {
+            position: absolute;
+            background-color: rgba(212, 175, 55, 0.4); /* Warna emas pudar (Boleh tukar ke pink bunga) */
+            border-radius: 50%;
+            pointer-events: none;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
         }
 
         /* ==========================================
@@ -102,8 +136,9 @@
         }
 
         .guest-name {
-            font-size: 1.1rem;
-            font-weight: bold;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 600;
             color: #fff;
             margin-top: 5px;
         }
@@ -131,21 +166,29 @@
         }
 
         /* ==========================================
-           PAGE SECTIONS
+           PAGE SECTIONS (Z-index ditambah supaya content di atas partikel)
         ========================================== */
         section {
+            position: relative;
+            z-index: 10; 
             padding: 60px 20px;
-            min-height: 100vh;
+            /* DIUBAH: Dibuang min-height: 100vh supaya jarak rapat */
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
         }
 
+        /* Kurangkan padding untuk rapatkan jarak antara section di bawah */
+        #aturcara, #lokasi, #rsvp, #ucapan-section {
+            padding: 30px 20px;
+        }
+
         #beranda {
             background: linear-gradient(rgba(123, 142, 120, 0.8), rgba(123, 142, 120, 0.8)), 
                         url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover;
             color: var(--text-light);
+            min-height: 100vh; /* Hanya banner utama yang full screen */
         }
 
         #beranda h2 { font-size: 1.2rem; letter-spacing: 3px; margin-bottom: 20px; text-transform: uppercase; }
@@ -157,7 +200,6 @@
             background-color: var(--primary-color);
             color: white;
             padding: 40px 20px;
-            min-height: auto;
         }
         .countdown-container {
             display: flex;
@@ -189,15 +231,16 @@
         .divider { width: 50px; height: 2px; background-color: var(--accent-color); margin: 30px auto; }
         
         /* Lokasi & Aturcara */
-        #lokasi, #aturcara { background-color: #ffffff; }
+        #lokasi, #aturcara { background-color: transparent; }
         .box {
-            background-color: var(--secondary-color);
+            background-color: #ffffff; /* Ditukar ke putih supaya menonjol atas background cream */
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             max-width: 500px;
-            margin: 20px auto;
+            margin: 10px auto; /* Margin dikurangkan */
             width: 100%;
+            border: 1px solid rgba(212, 175, 55, 0.3); /* Tambah sempadan emas nipis */
         }
         .btn {
             display: inline-block;
@@ -213,7 +256,7 @@
         .btn:hover { background-color: #5c6c59; }
 
         /* RSVP Form */
-        #rsvp { background-color: var(--primary-color); color: white; min-height: auto; }
+        #rsvp { background-color: var(--primary-color); color: white; }
         form { display: flex; flex-direction: column; width: 100%; max-width: 400px; margin: 0 auto; }
         input, select, textarea {
             padding: 12px; margin-bottom: 15px; border: none; border-radius: 8px; font-family: inherit; width: 100%;
@@ -227,26 +270,19 @@
            BAHAGIAN UCAPAN & DOA (GUESTBOOK)
         ========================================== */
         #ucapan-section {
-            background-color: var(--secondary-color);
-            padding: 60px 20px;
-            min-height: auto;
+            background-color: transparent;
         }
         .ucapan-box {
             max-width: 500px;
             width: 100%;
-            margin: 20px auto 0;
+            margin: 10px auto 0;
             max-height: 420px;
             overflow-y: auto;
             padding-right: 5px;
         }
-        /* Custom scrollbar untuk kotak ucapan */
-        .ucapan-box::-webkit-scrollbar {
-            width: 6px;
-        }
-        .ucapan-box::-webkit-scrollbar-thumb {
-            background: #c3cec0;
-            border-radius: 10px;
-        }
+        .ucapan-box::-webkit-scrollbar { width: 6px; }
+        .ucapan-box::-webkit-scrollbar-thumb { background: #c3cec0; border-radius: 10px; }
+        
         .ucapan-card {
             background-color: #ffffff;
             border-left: 4px solid var(--accent-color);
@@ -256,9 +292,12 @@
             text-align: left;
             box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         }
+        
+        /* DIUBAH: Font Nama dalam kad ucapan */
         .ucapan-nama {
-            font-weight: bold;
-            font-size: 0.95rem;
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            font-size: 1.15rem;
             color: var(--primary-color);
             margin-bottom: 6px;
             display: flex;
@@ -324,6 +363,9 @@
 </head>
 <body class="no-scroll">
 
+    <!-- BEKAS UNTUK PARTIKEL / BUNGA GUGUR -->
+    <div id="particles-container"></div>
+
     <!-- COVER SCREEN (OVERLAY AWAL) -->
     <div id="cover-overlay">
         <div class="cover-card">
@@ -332,7 +374,7 @@
             <p style="font-size: 0.9rem; letter-spacing: 1px;">23 JANUARI 2027</p>
             
             <div class="guest-box">
-                <p>Kepada YBhg. Tan Sri / Puan Sri / Dato' / Datin / Tuan / Puan / Encik / Cik:</p>
+                <p>Kepada YBhg. Tan Sri | Puan Sri | Dato' | Datin | Tuan | Puan | Encik | Cik:</p>
                 <div class="guest-name" id="guest-name-slot">Tetamu Jemputan</div>
             </div>
 
@@ -389,7 +431,7 @@
 
     <!-- ATURCARA -->
     <section id="aturcara" class="fade-in">
-        <h2 style="margin-bottom: 20px; color: var(--primary-color);">Aturcara Majlis</h2>
+        <h2 style="margin-bottom: 10px; color: var(--primary-color);">Aturcara Majlis</h2>
         <div class="box">
             <p><strong>11:00 AM</strong> - Ketibaan Tetamu</p>
             <hr style="border: 0.5px solid #ddd; margin: 15px 0;">
@@ -403,7 +445,7 @@
 
     <!-- LOKASI -->
     <section id="lokasi" class="fade-in">
-        <h2 style="margin-bottom: 20px; color: var(--primary-color);">Lokasi Majlis</h2>
+        <h2 style="margin-bottom: 10px; color: var(--primary-color);">Lokasi Majlis</h2>
         <div class="box">
             <h3 style="margin-bottom: 10px;">BIZMILLA @ GAMUDA GARDENS</h3>
             <p>Persiaran Gamuda Gardens Gamuda Gardens, 48050 Rawang, Selangor</p>
@@ -415,7 +457,7 @@
     <!-- RSVP -->
     <section id="rsvp" class="fade-in">
         <h2 style="margin-bottom: 10px;">Sahkan Kehadiran (RSVP)</h2>
-        <p style="margin-bottom: 30px;">Sila maklumkan kehadiran anda sebelum 15 Januari 2027</p>
+        <p style="margin-bottom: 20px;">Sila maklumkan kehadiran anda sebelum 15 Januari 2027</p>
         
         <form name="submit-to-google-sheet" id="rsvp-form">
             <input type="text" name="Nama" placeholder="Nama Penuh" required>
@@ -463,17 +505,45 @@
 
     <!-- SCRIPT -->
     <script>
-        // URL Google Apps Script Web App
+        // ==========================================
+        // PENJANA ANIMASI BUNGA / PARTIKEL
+        // ==========================================
+        function createParticles() {
+            const container = document.getElementById('particles-container');
+            const particleCount = 20; // Bilangan partikel di skrin
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Rawak kedudukan, saiz, dan kelajuan
+                const size = Math.random() * 8 + 4; // Saiz antara 4px ke 12px
+                const startLeft = Math.random() * 100; // Posisi X (0% to 100%)
+                const duration = Math.random() * 10 + 10; // Jatuh selama 10s ke 20s
+                const delay = Math.random() * 15; // Mula pada waktu berbeza
+
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${startLeft}%`;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.animationDelay = `-${delay}s`; // Biar mula terus tanpa tunggu
+
+                container.appendChild(particle);
+            }
+        }
+        createParticles();
+
+        // ==========================================
+        // SKRIP ASAL
+        // ==========================================
         const scriptURL = 'https://script.google.com/macros/s/AKfycbzmxLWIAAeUc_UwNfA0XQD7SliDt5oCRQ70fjSTsfnT91fURBOPbhvT_Cvq815HJrEz/exec';
 
-        // Membaca Nama Tetamu daripada URL (?to=Ahmad+Faizal)
         const urlParams = new URLSearchParams(window.location.search);
         const guestName = urlParams.get('to');
         if (guestName) {
             document.getElementById('guest-name-slot').innerText = guestName;
         }
 
-        // Animasi Scroll (Fade In)
         const observer = new IntersectionObserver(entries => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -483,7 +553,6 @@
         });
         document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-        // Handler Butang Buka Undangan
         const openBtn = document.getElementById('open-btn');
         const coverOverlay = document.getElementById('cover-overlay');
         const music = document.getElementById('bg-music');
@@ -495,7 +564,6 @@
             coverOverlay.classList.add('opened');
             document.body.classList.remove('no-scroll');
 
-            // Mainkan muzik
             music.volume = 0.5;
             music.play().then(() => {
                 isPlaying = true;
@@ -503,7 +571,6 @@
                 musicIcon.classList.add('fa-pause');
             }).catch(e => console.log('Playback error:', e));
 
-            // Auto-scroll perlahan
             setTimeout(() => {
                 let scrollInterval = setInterval(() => {
                     if (isAutoScrolling && window.scrollY + window.innerHeight < document.body.scrollHeight - 10) {
@@ -519,7 +586,6 @@
             }, 800);
         });
 
-        // Toggle Muzik
         function toggleMusic() {
             if (isPlaying) {
                 music.pause();
@@ -533,7 +599,6 @@
             isPlaying = !isPlaying;
         }
 
-        // Countdown Timer
         const countDownDate = new Date("Jan 23, 2027 11:00:00").getTime();
         const x = setInterval(function() {
             const now = new Date().getTime();
@@ -555,7 +620,6 @@
             }
         }, 1000);
 
-        // RSVP Toggle Pax
         function togglePax() {
             var kehadiran = document.getElementById("kehadiran").value;
             var pax = document.getElementById("pax");
@@ -569,9 +633,6 @@
             }
         }
 
-        // ==========================================
-        // FUNGSI MEMAPARKAN DOA & UCAPAN
-        // ==========================================
         function sanitize(str) {
             const temp = document.createElement('div');
             temp.textContent = str;
@@ -606,12 +667,8 @@
                 });
         }
 
-        // Muat turun ucapan serta-merta apabila laman dibuka
         window.addEventListener('DOMContentLoaded', muatTurunUcapan);
 
-        // ==========================================
-        // SUBMIT BORANG RSVP KE GOOGLE SHEETS
-        // ==========================================
         const form = document.forms['submit-to-google-sheet'];
         const btn = document.getElementById('submit-btn');
         const msg = document.getElementById('success-msg');
@@ -632,7 +689,6 @@
                     togglePax(); 
                     setTimeout(function(){ msg.style.display = "none"; }, 5000);
 
-                    // Jika tetamu ada isi ucapan, kemaskini senarai ucapan serta-merta
                     if (ucapanIsi !== "") {
                         setTimeout(muatTurunUcapan, 1500);
                     }
