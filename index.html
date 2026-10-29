@@ -55,6 +55,128 @@
         }
 
         /* ==========================================
+           FULLSCREEN OPENING COVER (SAMPUL SURAT)
+        ========================================== */
+        #cover-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(35, 45, 33, 0.88), rgba(35, 45, 33, 0.88)), 
+                        url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            z-index: 99999;
+            transition: opacity 0.9s ease, transform 0.9s ease;
+        }
+
+        #cover-overlay.opened {
+            opacity: 0;
+            transform: translateY(-100%);
+            pointer-events: none;
+        }
+
+        /* Reka Bentuk Sampul Surat */
+        .envelope-wrapper {
+            position: relative;
+            width: 310px;
+            height: 440px;
+            background: #faf8f2;
+            border-radius: 12px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(197, 155, 39, 0.5);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Garisan Jahitan Dalam Sampul */
+        .envelope-inner-border {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            right: 12px;
+            bottom: 12px;
+            border: 1px dashed rgba(197, 155, 39, 0.4);
+            border-radius: 8px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Lipatan Atas Sampul Surat (Flap) */
+        .envelope-top-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 52%;
+            background: #f1ecde;
+            clip-path: polygon(0 0, 100% 0, 50% 100%);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+            border-bottom: 2px solid rgba(197, 155, 39, 0.35);
+            z-index: 2;
+        }
+
+        /* Lipatan Bawah Sampul Surat */
+        .envelope-bottom-fold {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 48%;
+            background: #ebe5d5;
+            clip-path: polygon(0 100%, 100% 100%, 50% 0%);
+            opacity: 0.6;
+            z-index: 1;
+        }
+
+        /* Butang Cop Lilin Emas (Wax Seal) di Tengah */
+        .wax-seal-btn {
+            position: relative;
+            z-index: 10;
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #dfbc55 0%, #ba8a22 65%, #8f650c 100%);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.45), inset 0 -3px 6px rgba(0, 0, 0, 0.4);
+            border: 3px double rgba(255, 255, 255, 0.65);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            outline: none;
+            animation: pulse 2.2s infinite;
+            transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .wax-seal-btn:hover {
+            transform: scale(1.08);
+        }
+
+        .wax-seal-btn:active {
+            transform: scale(0.95);
+        }
+
+        .seal-initials {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.8rem;
+            color: #ffffff;
+            text-shadow: 1px 2px 6px rgba(0, 0, 0, 0.5);
+            line-height: 1;
+            user-select: none;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.04); }
+            100% { transform: scale(1); }
+        }
+
+        /* ==========================================
            BINGKAI EMAS DAN CORAK SUDUT (GOLD FRAME)
         ========================================== */
         .wedding-frame {
@@ -119,12 +241,12 @@
         }
 
         /* ==========================================
-           ANIMASI TEKS BERPERINGKAT (STAGGERED)
+           ANIMASI SLIDE & FADE BERPERINGKAT (STAGGERED)
         ========================================== */
         .anim-group .anim-item {
             opacity: 0;
-            transform: translateY(22px);
-            transition: opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+            transform: translateY(40px);
+            transition: opacity 1s cubic-bezier(0.2, 0.8, 0.2, 1), transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
         .anim-group.visible .anim-item {
@@ -132,11 +254,11 @@
             transform: translateY(0);
         }
 
-        .anim-group.visible .d-1 { transition-delay: 0.15s; }
-        .anim-group.visible .d-2 { transition-delay: 0.35s; }
-        .anim-group.visible .d-3 { transition-delay: 0.55s; }
-        .anim-group.visible .d-4 { transition-delay: 0.75s; }
-        .anim-group.visible .d-5 { transition-delay: 0.95s; }
+        .anim-group.visible .d-1 { transition-delay: 0.1s; }
+        .anim-group.visible .d-2 { transition-delay: 0.3s; }
+        .anim-group.visible .d-3 { transition-delay: 0.5s; }
+        .anim-group.visible .d-4 { transition-delay: 0.7s; }
+        .anim-group.visible .d-5 { transition-delay: 0.9s; }
 
         /* ==========================================
            PARTIKEL BUNGA / KELOPAK GUGUR
@@ -166,103 +288,6 @@
         }
 
         /* ==========================================
-           FULLSCREEN OPENING COVER (MODAL)
-        ========================================== */
-        #cover-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(rgba(35, 45, 33, 0.78), rgba(35, 45, 33, 0.78)), 
-                        url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover;
-            color: var(--text-light);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            z-index: 99999;
-            transition: opacity 0.9s ease, transform 0.9s ease;
-        }
-
-        #cover-overlay.opened {
-            opacity: 0;
-            transform: translateY(-100%);
-            pointer-events: none;
-        }
-
-        .cover-card {
-            background: rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            outline: 1px solid rgba(212, 175, 55, 0.4);
-            outline-offset: -5px;
-            padding: 40px 25px;
-            border-radius: 16px;
-            max-width: 360px;
-            width: 100%;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .cover-card h2 {
-            font-size: 0.85rem;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            margin-bottom: 8px;
-            color: var(--accent-gold-light);
-        }
-
-        .cover-card h1 {
-            font-family: 'Great Vibes', cursive;
-            font-size: 3rem;
-            margin-bottom: 10px;
-            color: #ffffff;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.4);
-        }
-
-        .guest-box {
-            margin: 20px 0;
-            padding: 14px 10px;
-            border-top: 1px solid rgba(255, 255, 255, 0.25);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.25);
-            font-size: 0.82rem;
-            letter-spacing: 0.5px;
-        }
-
-        .guest-name {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: #ffffff;
-            margin-top: 5px;
-        }
-
-        .btn-open {
-            background-color: var(--accent-gold);
-            color: #fff;
-            border: none;
-            padding: 12px 28px;
-            font-size: 0.9rem;
-            border-radius: 30px;
-            cursor: pointer;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            letter-spacing: 1px;
-            box-shadow: 0 4px 18px rgba(197, 155, 39, 0.4);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.04); }
-            100% { transform: scale(1); }
-        }
-
-        /* ==========================================
            BAHAGIAN KANDUNGAN UTAMA
         ========================================== */
         section {
@@ -282,7 +307,7 @@
             border-bottom: 2px solid var(--accent-gold);
         }
         #beranda h2 { font-size: 1.1rem; letter-spacing: 4px; margin-bottom: 12px; text-transform: uppercase; color: var(--accent-gold-light); }
-        #beranda h1 { font-family: 'Great Vibes', cursive; font-size: 3.8rem; line-height: 1.1; margin-bottom: 15px; }
+        #beranda h1 { font-family: 'Great Vibes', cursive; font-size: 4.5rem; line-height: 1.1; margin-bottom: 15px; }
         #beranda p { font-size: 1rem; letter-spacing: 2px; }
 
         /* Countdown */
@@ -363,28 +388,97 @@
         }
         .btn:hover { background-color: #5c6c59; }
 
-        /* RSVP Form */
+        /* ==========================================
+           RSVP (MODAL POP-UP)
+        ========================================== */
         #rsvp {
             background-color: var(--primary-color);
             color: white;
-            padding: 35px 20px;
+            padding: 40px 20px;
         }
         #rsvp .script-title {
             color: var(--accent-gold-light);
         }
-        form { display: flex; flex-direction: column; width: 100%; max-width: 380px; margin: 0 auto; }
+        .btn-rsvp-main {
+            background-color: var(--accent-gold);
+            color: white;
+            border: none;
+            padding: 16px 30px;
+            font-size: 1rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-top: 20px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            transition: transform 0.2s;
+        }
+        .btn-rsvp-main:hover {
+            transform: translateY(-2px);
+        }
+
+        /* RSVP Modal Overlay */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            z-index: 100000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .modal-content {
+            background: #ffffff;
+            color: var(--text-dark);
+            width: 90%;
+            max-width: 400px;
+            padding: 30px 25px;
+            border-radius: 12px;
+            position: relative;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+        }
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            color: #888;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        
+        form { display: flex; flex-direction: column; width: 100%; }
+        form h3 { margin-bottom: 20px; color: var(--primary-color); font-weight: bold; }
         input, select, textarea {
             padding: 12px;
             margin-bottom: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.4);
+            border: 1px solid #ddd;
             border-radius: 8px;
             font-family: inherit;
             font-size: 0.9rem;
             width: 100%;
-            background-color: #ffffff;
+            background-color: #f9f9f9;
         }
         button[type="submit"] {
-            background-color: var(--accent-gold);
+            background-color: var(--primary-color);
             color: white;
             border: none;
             padding: 14px;
@@ -392,20 +486,47 @@
             border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
-            letter-spacing: 1px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
-        button[type="submit"]:hover { background-color: #a8831f; }
 
-        /* Bahagian Ucapan & Doa */
+        /* ==========================================
+           BAHAGIAN UCAPAN (ASING)
+        ========================================== */
         #ucapan-section {
-            padding: 30px 15px 40px;
+            padding: 40px 15px 50px;
             background-color: transparent;
         }
+        .ucapan-form-box {
+            background: #ffffff;
+            border: 1px solid var(--border-gold);
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 440px;
+            width: 100%;
+            margin: 20px auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .ucapan-form-box textarea, .ucapan-form-box input {
+            border: 1px solid #ddd;
+            background-color: #fafafa;
+            margin-bottom: 10px;
+        }
+        .btn-ucapan {
+            background-color: var(--accent-gold);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+        }
+        
+        /* Senarai Ucapan */
         .ucapan-box {
             max-width: 440px;
             width: 100%;
-            margin: 10px auto 0;
+            margin: 20px auto 0;
             max-height: 400px;
             overflow-y: auto;
             padding-right: 5px;
@@ -415,15 +536,13 @@
         
         .ucapan-card {
             background-color: #ffffff;
-            border-left: 3px solid var(--accent-gold);
             border-radius: 8px;
             padding: 14px 18px;
             margin-bottom: 12px;
             text-align: left;
             box-shadow: 0 2px 10px rgba(0,0,0,0.04);
-            border-top: 1px solid #f0f0f0;
-            border-right: 1px solid #f0f0f0;
-            border-bottom: 1px solid #f0f0f0;
+            border: 1px solid #f0f0f0;
+            border-left: 3px solid var(--accent-gold);
         }
         .ucapan-nama {
             font-family: 'Playfair Display', serif;
@@ -496,20 +615,16 @@
     <!-- BEKAS UNTUK PARTIKEL / BUNGA GUGUR -->
     <div id="particles-container"></div>
 
-    <!-- COVER SCREEN (OVERLAY AWAL) -->
+    <!-- COVER SCREEN: SAMPUL SURAT & INITIALS WAX SEAL SAHAJA -->
     <div id="cover-overlay">
-        <div class="cover-card">
-            <h2>Walimatul Urus</h2>
-            <h1>Hannani & Aiman</h1>
-            <p style="font-size: 0.85rem; letter-spacing: 2px;">23 JANUARI 2027</p>
+        <div class="envelope-wrapper">
+            <div class="envelope-inner-border"></div>
+            <div class="envelope-top-flap"></div>
+            <div class="envelope-bottom-fold"></div>
             
-            <div class="guest-box">
-                <p>Kepada YBhg. Tan Sri | Puan Sri | Dato' | Datin | Tuan | Puan | Encik | Cik:</p>
-                <div class="guest-name" id="guest-name-slot">Tetamu Jemputan</div>
-            </div>
-
-            <button class="btn-open" id="open-btn">
-                <i class="fas fa-envelope-open"></i> Buka Undangan
+            <!-- Butang Wax Seal Parap Nama di Bahagian Tengah -->
+            <button class="wax-seal-btn" id="open-btn" aria-label="Buka Jemputan">
+                <span class="seal-initials">H&A</span>
             </button>
         </div>
     </div>
@@ -639,12 +754,50 @@
             </div>
         </section>
 
-        <!-- RSVP (Ruangan Nombor Telefon Telah Dibuang) -->
+        <!-- RSVP (SINGLE BUTTON TO OPEN MODAL) -->
         <section id="rsvp" class="anim-group">
-            <h2 class="script-title anim-item d-1">Sahkan Kehadiran</h2>
-            <p class="anim-item d-2" style="font-size: 0.88rem; margin-bottom: 20px; color: #e8e8e8;">Sila maklumkan kehadiran anda sebelum 15 Januari 2027</p>
+            <h2 class="script-title anim-item d-1">Kehadiran</h2>
+            <p class="anim-item d-2" style="font-size: 0.88rem; margin-bottom: 5px; color: #e8e8e8;">Sila maklumkan kehadiran anda sebelum 15 Januari 2027</p>
             
-            <form name="submit-to-google-sheet" id="rsvp-form" class="anim-item d-3">
+            <button class="btn-rsvp-main anim-item d-3" onclick="openRsvpModal()">
+                <i class="fas fa-envelope-open-text"></i> Sahkan Kehadiran
+            </button>
+        </section>
+
+        <!-- BAHAGIAN DOA & UCAPAN TETAMU (ASING) -->
+        <section id="ucapan-section" class="anim-group">
+            <h2 class="script-title anim-item d-1">Doa & Ucapan</h2>
+            <div class="gold-crest anim-item d-1">
+                <svg viewBox="0 0 24 24"><path d="M12,2 L14,8 L20,10 L15,14 L17,20 L12,16 L7,20 L9,14 L4,10 L10,8 Z"/></svg>
+            </div>
+            <p class="anim-item d-2" style="font-size: 0.85rem; color: #666; margin-bottom: 12px;">Titipan doa tulus daripada tetamu jemputan</p>
+            
+            <div class="ucapan-form-box anim-item d-3">
+                <form name="submit-ucapan-only" id="ucapan-form">
+                    <input type="text" name="Nama" placeholder="Nama Anda" required>
+                    <input type="hidden" name="Kehadiran" value="">
+                    <input type="hidden" name="Bilangan" value="">
+                    
+                    <textarea name="Ucapan" rows="3" placeholder="Tuliskan doa & ucapan..." required></textarea>
+                    <button type="submit" class="btn-ucapan" id="btn-submit-ucapan">Hantar Ucapan</button>
+                    <p id="msg-ucapan" style="display: none; margin-top: 10px; color: var(--primary-color); font-size: 0.85rem; font-weight: bold;">Ucapan dihantar!</p>
+                </form>
+            </div>
+
+            <div class="ucapan-box anim-item d-4" id="ucapan-list">
+                <p style="color: #888; font-size: 0.9rem; margin-top: 20px;">Sedang memuatkan ucapan...</p>
+            </div>
+        </section>
+
+    </div> <!-- Tamat .card-container -->
+
+    <!-- RSVP MODAL (POP-UP) -->
+    <div class="modal-overlay" id="rsvp-modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeRsvpModal()"><i class="fas fa-times"></i></button>
+            <h3>Sahkan Kehadiran</h3>
+            
+            <form name="submit-rsvp-only" id="rsvp-form-modal">
                 <input type="text" name="Nama" placeholder="Nama Penuh" required>
                 
                 <select name="Kehadiran" id="kehadiran" required onchange="togglePax()">
@@ -660,28 +813,14 @@
                     <option value="3">3 Orang</option>
                     <option value="4">4 Orang</option>
                 </select>
-
-                <textarea name="Ucapan" id="ucapan-input" rows="3" placeholder="Tinggalkan ucapan buat mempelai... (Pilihan)"></textarea>
                 
-                <button type="submit" id="submit-btn">Hantar RSVP</button>
-                <p id="success-msg" style="display: none; margin-top: 15px; color: var(--accent-gold-light); font-weight: bold;">Terima kasih, RSVP anda telah direkodkan!</p>
+                <input type="hidden" name="Ucapan" value="">
+
+                <button type="submit" id="btn-submit-rsvp">Hantar RSVP</button>
+                <p id="msg-rsvp" style="display: none; margin-top: 15px; color: var(--primary-color); font-weight: bold;">Terima kasih, RSVP direkodkan!</p>
             </form>
-        </section>
-
-        <!-- BAHAGIAN DOA & UCAPAN TETAMU -->
-        <section id="ucapan-section" class="anim-group">
-            <h2 class="script-title anim-item d-1">Doa & Ucapan</h2>
-            <div class="gold-crest anim-item d-1">
-                <svg viewBox="0 0 24 24"><path d="M12,2 L14,8 L20,10 L15,14 L17,20 L12,16 L7,20 L9,14 L4,10 L10,8 Z"/></svg>
-            </div>
-            <p class="anim-item d-2" style="font-size: 0.85rem; color: #666; margin-bottom: 12px;">Titipan doa tulus daripada tetamu jemputan</p>
-            
-            <div class="ucapan-box anim-item d-3" id="ucapan-list">
-                <p style="color: #888; font-size: 0.9rem; margin-top: 20px;">Sedang memuatkan ucapan...</p>
-            </div>
-        </section>
-
-    </div> <!-- Tamat .card-container -->
+        </div>
+    </div>
 
     <!-- BOTTOM NAV -->
     <div class="bottom-nav">
@@ -722,13 +861,6 @@
         // Google Apps Script Web App
         const scriptURL = 'https://script.google.com/macros/s/AKfycbzmxLWIAAeUc_UwNfA0XQD7SliDt5oCRQ70fjSTsfnT91fURBOPbhvT_Cvq815HJrEz/exec';
 
-        // Baca Nama Tetamu daripada URL (?to=Ahmad+Faizal)
-        const urlParams = new URLSearchParams(window.location.search);
-        const guestName = urlParams.get('to');
-        if (guestName) {
-            document.getElementById('guest-name-slot').innerText = guestName;
-        }
-
         // Observer untuk Animasi Fade & Slide
         const observer = new IntersectionObserver(entries => {
             entries.forEach(entry => {
@@ -740,7 +872,7 @@
 
         document.querySelectorAll('.anim-group').forEach(el => observer.observe(el));
 
-        // Handler Butang Buka Undangan
+        // Handler Butang Cop Mohor Lilin (Wax Seal) Buka Undangan
         const openBtn = document.getElementById('open-btn');
         const coverOverlay = document.getElementById('cover-overlay');
         const music = document.getElementById('bg-music');
@@ -809,6 +941,11 @@
             }
         }, 1000);
 
+        // RSVP Modal
+        const modal = document.getElementById('rsvp-modal');
+        function openRsvpModal() { modal.classList.add('active'); }
+        function closeRsvpModal() { modal.classList.remove('active'); }
+        
         function togglePax() {
             var kehadiran = document.getElementById("kehadiran").value;
             var pax = document.getElementById("pax");
@@ -856,38 +993,62 @@
                     container.innerHTML = '<p style="color: #999; font-size: 0.9rem;">Ruangan ucapan sedang dikemaskini...</p>';
                 });
         }
-
         window.addEventListener('DOMContentLoaded', muatTurunUcapan);
 
-        // Submit RSVP ke Google Sheets
-        const form = document.forms['submit-to-google-sheet'];
-        const btn = document.getElementById('submit-btn');
-        const msg = document.getElementById('success-msg');
+        // Submit RSVP Modal
+        const formRsvp = document.forms['submit-rsvp-only'];
+        const btnRsvp = document.getElementById('btn-submit-rsvp');
+        const msgRsvp = document.getElementById('msg-rsvp');
 
-        form.addEventListener('submit', e => {
+        formRsvp.addEventListener('submit', e => {
             e.preventDefault();
-            btn.innerHTML = "Menghantar..."; 
-            btn.disabled = true;
+            btnRsvp.innerHTML = "Menghantar..."; 
+            btnRsvp.disabled = true;
 
-            const ucapanIsi = document.getElementById('ucapan-input').value.trim();
-            
-            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+            fetch(scriptURL, { method: 'POST', body: new FormData(formRsvp)})
                 .then(response => {
-                    msg.style.display = "block";
-                    btn.innerHTML = "Hantar RSVP";
-                    btn.disabled = false;
-                    form.reset();
-                    togglePax(); 
-                    setTimeout(function(){ msg.style.display = "none"; }, 5000);
-
-                    if (ucapanIsi !== "") {
-                        setTimeout(muatTurunUcapan, 1500);
-                    }
+                    msgRsvp.style.display = "block";
+                    btnRsvp.innerHTML = "Hantar RSVP";
+                    btnRsvp.disabled = false;
+                    formRsvp.reset();
+                    togglePax();
+                    
+                    setTimeout(() => { 
+                        msgRsvp.style.display = "none"; 
+                        closeRsvpModal(); 
+                    }, 2500);
                 })
                 .catch(error => {
                     console.error('Error!', error.message);
-                    btn.innerHTML = "Hantar RSVP";
-                    btn.disabled = false;
+                    btnRsvp.innerHTML = "Hantar RSVP";
+                    btnRsvp.disabled = false;
+                });
+        });
+
+        // Submit Ucapan Sahaja
+        const formUcapan = document.forms['submit-ucapan-only'];
+        const btnUcapan = document.getElementById('btn-submit-ucapan');
+        const msgUcapan = document.getElementById('msg-ucapan');
+
+        formUcapan.addEventListener('submit', e => {
+            e.preventDefault();
+            btnUcapan.innerHTML = "Mengirim..."; 
+            btnUcapan.disabled = true;
+
+            fetch(scriptURL, { method: 'POST', body: new FormData(formUcapan)})
+                .then(response => {
+                    msgUcapan.style.display = "block";
+                    btnUcapan.innerHTML = "Hantar Ucapan";
+                    btnUcapan.disabled = false;
+                    formUcapan.reset();
+                    
+                    setTimeout(() => { msgUcapan.style.display = "none"; }, 3000);
+                    setTimeout(muatTurunUcapan, 1500);
+                })
+                .catch(error => {
+                    console.error('Error!', error.message);
+                    btnUcapan.innerHTML = "Hantar Ucapan";
+                    btnUcapan.disabled = false;
                 });
         });
     </script>
