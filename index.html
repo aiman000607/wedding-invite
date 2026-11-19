@@ -95,15 +95,23 @@
             padding: 15px;
         }
 
-        /* Gambar Huruf / Butang di Tengah */
-        .cover-logo-img {
+        /* Kotak tetap supaya ruang kosong gambar tidak menolak teks ke bawah */
+        .logo-crop-box {
             width: 150px;
-            max-width: 55vw;
-            height: auto;
-            filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.55));
+            height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             animation: pulse 2.2s infinite;
-            transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            user-select: none;
+        }
+
+        /* Zum masuk pada gambar sahaja (ubah nilai 1.8 ikut kesesuaian, cth: 1.5 atau 2.2) */
+        .cover-logo-img {
+            width: 50%;
+            height: auto;
+            transform: scale(1.8);
+            filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.55));
+            pointer-events: none;
         }
 
         .cover-trigger:hover .cover-logo-img {
@@ -640,8 +648,9 @@
     <!-- COVER SCREEN: BUTANG GAMBAR & TEKS BERGARIS "SILA KLIK DI SINI" -->
     <div id="cover-overlay">
         <button class="cover-trigger" id="open-btn" aria-label="Buka Jemputan">
-            <!-- Gantikan 'butang.png' dengan nama fail gambar huruf/butang anda -->
-            <img src="butang.png" alt="H & A" class="cover-logo-img">
+            <div class="logo-crop-box">
+                <img src="butang.png" alt="H & A" class="cover-logo-img">
+            </div>
             <span class="tap-hint">Sila klik di sini</span>
         </button>
     </div>
