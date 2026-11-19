@@ -7,10 +7,10 @@
     <!-- FontAwesome untuk Icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Google Fonts: Amiri & Katibeh (Kaligrafi Arab), Great Vibes (Script), Playfair Display (Serif), Montserrat (Modern Sans) -->
+    <!-- Google Fonts: Great Vibes (Script), Playfair Display (Serif), Montserrat (Modern Sans) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,700;1,700&family=Great+Vibes&family=Katibeh&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Scheherazade+New:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -55,7 +55,7 @@
         }
 
         /* ==========================================
-           FULLSCREEN OPENING COVER (ZOOMED OUT PHOTO)
+           FULLSCREEN OPENING COVER (IMAGE BUTTON)
         ========================================== */
         #cover-overlay {
             position: fixed;
@@ -64,7 +64,6 @@
             width: 100%;
             height: 100%;
             background-color: #1f261e;
-            /* 'contain' supaya gambar tidak terlalu zoom; boleh tukar kepada '85%' atau '90%' jika perlu */
             background-image: linear-gradient(rgba(25, 32, 24, 0.42), rgba(25, 32, 24, 0.52)), 
                               url('gambar.PNG');
             background-position: center;
@@ -96,50 +95,36 @@
             padding: 15px;
         }
 
-        /* Butang Bulat Parap Arab di Tengah */
-        .wax-seal-btn {
-            width: 115px;
-            height: 115px;
-            border-radius: 50%;
-            background: radial-gradient(circle, #dfbc55 0%, #ba8a22 65%, #8f650c 100%);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55), inset 0 2px 5px rgba(255, 255, 255, 0.5), inset 0 -3px 6px rgba(0, 0, 0, 0.4);
-            border: 3px double rgba(255, 255, 255, 0.75);
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        /* Gambar Huruf / Butang di Tengah */
+        .cover-logo-img {
+            width: 150px;
+            max-width: 55vw;
+            height: auto;
+            filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.55));
             animation: pulse 2.2s infinite;
             transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            user-select: none;
         }
 
-        .cover-trigger:hover .wax-seal-btn {
-            transform: scale(1.08);
+        .cover-trigger:hover .cover-logo-img {
+            transform: scale(1.06);
         }
 
-        .cover-trigger:active .wax-seal-btn {
+        .cover-trigger:active .cover-logo-img {
             transform: scale(0.95);
         }
 
-        /* Font Kaligrafi Arab Baru: Amiri (Boleh juga tukar ke 'Katibeh' atau 'Scheherazade New') */
-        .arabic-initials {
-            font-family: 'Amiri', serif;
-            font-style: italic;
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #ffffff;
-            text-shadow: 1px 2px 6px rgba(0, 0, 0, 0.5);
-            line-height: 1;
-            user-select: none;
-            direction: rtl;
-        }
-
         .tap-hint {
-            margin-top: 18px;
+            margin-top: 16px;
             color: #ffffff;
             font-family: 'Montserrat', sans-serif;
             font-size: 0.9rem;
             font-weight: 500;
             letter-spacing: 2px;
             text-transform: uppercase;
+            text-decoration: underline;
+            text-underline-offset: 6px;
+            text-decoration-thickness: 1.5px;
             text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85);
             animation: fadePulse 2.2s infinite;
         }
@@ -151,7 +136,7 @@
         }
 
         @keyframes fadePulse {
-            0%, 100% { opacity: 0.75; }
+            0%, 100% { opacity: 0.8; }
             50% { opacity: 1; }
         }
 
@@ -652,13 +637,12 @@
     <!-- BEKAS UNTUK PARTIKEL / BUNGA GUGUR -->
     <div id="particles-container"></div>
 
-    <!-- COVER SCREEN: TANPA KOTAK, PARAP HURUF ARAB (AMIRI) & SILA TEKAN DI SINI -->
+    <!-- COVER SCREEN: BUTANG GAMBAR & TEKS BERGARIS "SILA KLIK DI SINI" -->
     <div id="cover-overlay">
         <button class="cover-trigger" id="open-btn" aria-label="Buka Jemputan">
-            <div class="wax-seal-btn">
-                <span class="arabic-initials">ح &amp; أ</span>
-            </div>
-            <span class="tap-hint">Sila tekan di sini</span>
+            <!-- Gantikan 'butang.png' dengan nama fail gambar huruf/butang anda -->
+            <img src="butang.png" alt="H & A" class="cover-logo-img">
+            <span class="tap-hint">Sila klik di sini</span>
         </button>
     </div>
 
@@ -802,7 +786,7 @@
                     </div>
 
                     <div class="contact-list">
-                        <!-- Kenalan 1: Bapa -->
+                        <!-- Kenalan 1: Ibu -->
                         <div class="contact-item anim-item d-2">
                             <div class="contact-info">
                                 <strong>Acik Norfadhilah</strong>
@@ -818,37 +802,37 @@
                             </div>
                         </div>
 
-                        <!-- Kenalan 2: Ibu -->
+                        <!-- Kenalan 2: Pengantin Perempuan -->
                         <div class="contact-item anim-item d-3">
                             <div class="contact-info">
-                                <strong>Nurul Hannani</strong>
-                                <span>Ibu Pengantin</span>
+                                <strong>Hannani</strong>
+                                <span>Pengantin Perempuan</span>
                             </div>
                             <div class="contact-actions">
-                                <a href="tel:+60193638341" class="contact-btn call-btn" aria-label="Panggil Nurul Hannani">
+                                <a href="tel:+60193638341" class="contact-btn call-btn" aria-label="Panggil Hannani">
                                     <i class="fas fa-phone-alt"></i>
                                 </a>
-                                <a href="https://wa.me/60193638341?text=Assalamualaikum%2C%20saya%20ingin%20bertanya%20mengenai%20majlis%20perkahwinan%20Hannani%20%26%20Aiman." target="_blank" rel="noopener noreferrer" class="contact-btn wa-btn" aria-label="WhatsApp Nurul Hannani">
+                                <a href="https://wa.me/60193638341?text=Assalamualaikum%2C%20saya%20ingin%20bertanya%20mengenai%20majlis%20perkahwinan%20Hannani%20%26%20Aiman." target="_blank" rel="noopener noreferrer" class="contact-btn wa-btn" aria-label="WhatsApp Hannani">
                                     <i class="fab fa-whatsapp"></i>
                                 </a>
                             </div>
                         </div>
 
-                        <!-- Kenalan 3: Wakil Keluarga 
+                        <!-- Kenalan 3: Pengantin Lelaki -->
                         <div class="contact-item anim-item d-4">
                             <div class="contact-info">
-                                <strong>Wakil Keluarga</strong>
-                                <span>Ahli Keluarga</span>
+                                <strong>Aiman</strong>
+                                <span>Pengantin Lelaki</span>
                             </div>
                             <div class="contact-actions">
-                                <a href="tel:+60123456781" class="contact-btn call-btn" aria-label="Panggil Wakil Keluarga">
+                                <a href="tel:+60193990323" class="contact-btn call-btn" aria-label="Panggil Aiman">
                                     <i class="fas fa-phone-alt"></i>
                                 </a>
-                                <a href="https://wa.me/60123456781?text=Assalamualaikum%2C%20saya%20ingin%20bertanya%20mengenai%20majlis%20perkahwinan%20Hannani%20%26%20Aiman." target="_blank" rel="noopener noreferrer" class="contact-btn wa-btn" aria-label="WhatsApp Wakil Keluarga">
+                                <a href="https://wa.me/60193990323?text=Assalamualaikum%2C%20saya%20ingin%20bertanya%20mengenai%20majlis%20perkahwinan%20Hannani%20%26%20Aiman." target="_blank" rel="noopener noreferrer" class="contact-btn wa-btn" aria-label="WhatsApp Aiman">
                                     <i class="fab fa-whatsapp"></i>
                                 </a>
                             </div>
-                        </div> -->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -973,7 +957,7 @@
 
         document.querySelectorAll('.anim-group').forEach(el => observer.observe(el));
 
-        // Handler Butang Parap Arab Buka Undangan
+        // Handler Butang Muka Depan Buka Undangan
         const openBtn = document.getElementById('open-btn');
         const coverOverlay = document.getElementById('cover-overlay');
         const music = document.getElementById('bg-music');
