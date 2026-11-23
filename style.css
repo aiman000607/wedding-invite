@@ -1,0 +1,657 @@
+:root {
+    --primary-color: #6d1a2c; /* Deep Burgundy */
+    --secondary-color: #fcf8f5; /* Warm Ivory */
+    --text-dark: #3a2e30;
+    --text-light: #ffffff;
+    --accent-gold: #c59b27; /* Rich Gold */
+    --accent-gold-light: #ebd178; /* Champagne Gold */
+    --border-gold: rgba(197, 155, 39, 0.5);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #efe8e4;
+    color: var(--text-dark);
+    text-align: center;
+    padding-bottom: 70px; 
+    scroll-behavior: smooth;
+}
+
+body.no-scroll {
+    overflow: hidden;
+}
+
+/* Container Kad Utama */
+.card-container {
+    max-width: 480px;
+    margin: 0 auto;
+    background-color: var(--secondary-color);
+    position: relative;
+    box-shadow: 0 10px 40px rgba(60, 12, 24, 0.15);
+    overflow: hidden;
+    border-left: 1px solid rgba(197, 155, 39, 0.35);
+    border-right: 1px solid rgba(197, 155, 39, 0.35);
+}
+
+/* ==========================================
+   STATIC GOLD BORDER OUTLINE (FIXED ON SCROLL)
+========================================== */
+.static-border {
+    position: fixed;
+    top: 10px;
+    bottom: 66px; /* Berhenti tepat di atas bar navigasi bawah */
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 20px);
+    max-width: 460px;
+    border: 1.5px solid var(--accent-gold);
+    outline: 1px solid rgba(235, 209, 120, 0.65);
+    outline-offset: -5px;
+    border-radius: 8px;
+    pointer-events: none; /* Membolehkan sentuhan/klik tembus ke butang di bawah bingkai */
+    z-index: 990; /* Kekal di atas kandungan kad, tetapi di bawah menu & pop-up RSVP */
+}
+
+/* ==========================================
+   FULLSCREEN OPENING COVER (IMAGE BUTTON)
+========================================== */
+#cover-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #240810;
+    background-image: linear-gradient(rgba(45, 10, 18, 0.45), rgba(45, 10, 18, 0.58)), 
+                      url('gambar.PNG');
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    z-index: 99999;
+    transition: opacity 0.9s ease, transform 0.9s ease;
+}
+
+#cover-overlay.opened {
+    opacity: 0;
+    transform: translateY(-100%);
+    pointer-events: none;
+}
+
+.cover-trigger {
+    background: none;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    outline: none;
+    padding: 15px;
+}
+
+.cover-logo-img {
+    width: 150px;
+    max-width: 55vw;
+    height: auto;
+    filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.6));
+    animation: pulse 2.2s infinite;
+    transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    user-select: none;
+}
+
+.cover-trigger:hover .cover-logo-img {
+    transform: scale(1.06);
+}
+
+.cover-trigger:active .cover-logo-img {
+    transform: scale(0.95);
+}
+
+.tap-hint {
+    margin-top: 16px;
+    color: var(--accent-gold-light);
+    font-family: 'Arial', sans-serif;
+    font-size: 0.85rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: underline;
+    text-underline-offset: 6px;
+    text-decoration-thickness: 1.5px;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85);
+    animation: fadePulse 2.2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+@keyframes fadePulse {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 1; }
+}
+
+/* ==========================================
+   BINGKAI EMAS DAN CORAK SUDUT (GOLD FRAME)
+========================================== */
+.wedding-frame {
+    position: relative;
+    /* border: 1px solid var(--border-gold);
+    outline: 2px solid var(--border-gold); */
+    outline-offset: -7px;
+    margin: 15px;
+    background-color: #ffffff;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.corner-ornament {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    pointer-events: none;
+    z-index: 5;
+}
+.corner-tl { top: 12px; left: 12px; }
+.corner-tr { top: 12px; right: 12px; transform: rotate(90deg); }
+.corner-bl { bottom: 12px; left: 12px; transform: rotate(-90deg); }
+.corner-br { bottom: 12px; right: 12px; transform: rotate(180deg); }
+
+.gold-crest {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 10px auto 18px;
+    width: 80%;
+}
+.gold-crest::before, .gold-crest::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--accent-gold), transparent);
+}
+.gold-crest svg {
+    width: 24px;
+    height: 24px;
+    fill: var(--accent-gold);
+}
+
+/* ==========================================
+   TIPOGRAFI (PLAYFAIR DISPLAY & ARIAL)
+========================================== */
+h1, h2, h3 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+}
+
+.script-title {
+    font-family: 'Pinyon Script', cursive !important;
+    font-size: 2.8rem !important;
+    color: var(--primary-color);
+    line-height: 1.15;
+    margin-bottom: 6px;
+    font-weight: normal;
+    text-shadow: 0 1px 2px rgba(109, 26, 44, 0.12);
+}
+
+/* ==========================================
+   ANIMASI SLIDE & FADE BERPERINGKAT (STAGGERED)
+========================================== */
+.anim-group .anim-item {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 1s cubic-bezier(0.2, 0.8, 0.2, 1), transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.anim-group.visible .anim-item {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.anim-group.visible .d-1 { transition-delay: 0.1s; }
+.anim-group.visible .d-2 { transition-delay: 0.3s; }
+.anim-group.visible .d-3 { transition-delay: 0.5s; }
+.anim-group.visible .d-4 { transition-delay: 0.7s; }
+.anim-group.visible .d-5 { transition-delay: 0.9s; }
+
+/* ==========================================
+   PARTIKEL BUNGA / KELOPAK GUGUR
+========================================== */
+#particles-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 100;
+    overflow: hidden;
+}
+.particle {
+    position: absolute;
+    background: radial-gradient(circle, rgba(235, 209, 120, 0.65) 0%, rgba(197, 155, 39, 0.12) 80%);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: fall linear infinite;
+}
+@keyframes fall {
+    0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
+    15% { opacity: 0.85; }
+    85% { opacity: 0.85; }
+    100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+}
+
+/* ==========================================
+   BAHAGIAN KANDUNGAN UTAMA
+========================================== */
+section {
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+#beranda {
+    background: linear-gradient(rgba(109, 26, 44, 0.78), rgba(78, 17, 31, 0.82)), 
+                url('gambar.PNG') center/cover no-repeat;
+    color: var(--text-light);
+    min-height: 85vh;
+    border-bottom: 2px solid var(--accent-gold);
+}
+#beranda h2 { font-size: 1.1rem; letter-spacing: 4px; margin-bottom: 12px; text-transform: uppercase; color: var(--accent-gold-light); font-weight: 400; }
+#beranda h1 { 
+    font-family: 'Pinyon Script', cursive; 
+    font-size: 4.8rem; 
+    line-height: 1.15; 
+    margin-bottom: 15px; 
+    color: #ffffff; 
+    font-weight: normal;
+}
+#beranda p { font-size: 0.95rem; letter-spacing: 2px; color: var(--accent-gold-light); }
+
+/* Countdown */
+#countdown-section {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 30px 20px;
+    border-bottom: 2px solid var(--accent-gold);
+}
+.countdown-container {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 15px;
+}
+.time-box {
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(235, 209, 120, 0.4);
+    padding: 10px;
+    border-radius: 8px;
+    min-width: 65px;
+}
+.time-box span {
+    display: block;
+    font-size: 1.55rem;
+    font-weight: 700;
+    font-family: 'Playfair Display', serif;
+    color: var(--accent-gold-light);
+}
+.time-box p {
+    font-size: 0.7rem;
+    margin-top: 3px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Info Pengantin */
+#info { background-color: transparent; }
+.bismillah { font-size: 1.8rem; margin-bottom: 15px; color: var(--primary-color); }
+.parents { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 600; margin: 12px 0; color: var(--primary-color); line-height: 1.5; }
+.bride-groom-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.55rem;
+    color: var(--primary-color);
+    margin: 10px 0;
+    font-weight: 600;
+}
+
+/* Kotak Bingkai Aturcara, Lokasi & Hubungi */
+#aturcara, #lokasi, #hubungi {
+    padding: 20px 15px;
+}
+.frame-content {
+    padding: 35px 20px;
+    position: relative;
+}
+.schedule-line {
+    font-size: 0.9rem;
+    margin: 10px 0;
+    line-height: 1.6;
+}
+.schedule-line strong {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    color: var(--primary-color);
+    font-size: 1.05rem;
+    letter-spacing: 1px;
+}
+.btn {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 11px 22px;
+    text-decoration: none;
+    border-radius: 25px;
+    margin-top: 12px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    border: 1px solid var(--accent-gold);
+    transition: 0.3s;
+    box-shadow: 0 4px 10px rgba(109, 26, 44, 0.15);
+}
+.btn:hover { background-color: #4e111f; }
+
+/* ==========================================
+   BAHAGIAN HUBUNGI (CALL & WHATSAPP)
+========================================== */
+.contact-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 10px;
+}
+.contact-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--secondary-color);
+    border: 1px solid rgba(197, 155, 39, 0.35);
+    padding: 12px 16px;
+    border-radius: 10px;
+    text-align: left;
+}
+.contact-info strong {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+.contact-info span {
+    font-size: 0.78rem;
+    color: #666666;
+}
+.contact-actions {
+    display: flex;
+    gap: 10px;
+}
+.contact-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: transform 0.2s, opacity 0.2s;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+}
+.contact-btn:hover {
+    transform: scale(1.08);
+    opacity: 0.9;
+}
+.call-btn {
+    background-color: var(--primary-color);
+}
+.wa-btn {
+    background-color: #25D366;
+    font-size: 1.15rem;
+}
+
+/* ==========================================
+   RSVP (MODAL POP-UP)
+========================================== */
+#rsvp {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 40px 20px;
+    border-top: 2px solid var(--accent-gold);
+    border-bottom: 2px solid var(--accent-gold);
+}
+#rsvp .script-title {
+    color: var(--accent-gold-light);
+}
+.btn-rsvp-main {
+    background-color: var(--accent-gold);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    padding: 16px 30px;
+    font-size: 0.95rem;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-top: 20px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    transition: transform 0.2s, background-color 0.2s;
+}
+.btn-rsvp-main:hover {
+    transform: translateY(-2px);
+    background-color: #b0881d;
+}
+
+/* RSVP Modal Overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(36, 8, 16, 0.75);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    z-index: 100000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+.modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+.modal-content {
+    background: #ffffff;
+    color: var(--text-dark);
+    width: 90%;
+    max-width: 400px;
+    padding: 30px 25px;
+    border-radius: 12px;
+    border: 1px solid var(--border-gold);
+    position: relative;
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.35);
+}
+.modal-overlay.active .modal-content {
+    transform: translateY(0);
+}
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 1.5rem;
+    color: #888;
+    cursor: pointer;
+    background: none;
+    border: none;
+}
+
+form { display: flex; flex-direction: column; width: 100%; }
+form h3 { margin-bottom: 20px; color: var(--primary-color); font-weight: bold; }
+input, select, textarea {
+    padding: 12px;
+    margin-bottom: 14px;
+    border: 1px solid #e2d5d8;
+    border-radius: 8px;
+    font-family: 'Arial', sans-serif;
+    font-size: 0.9rem;
+    width: 100%;
+    background-color: #fcfafa;
+}
+button[type="submit"] {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 14px;
+    font-size: 0.95rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(109, 26, 44, 0.2);
+}
+button[type="submit"]:hover {
+    background-color: #4e111f;
+}
+
+/* ==========================================
+   BAHAGIAN UCAPAN (ASING)
+========================================== */
+#ucapan-section {
+    padding: 40px 15px 50px;
+    background-color: transparent;
+}
+.ucapan-form-box {
+    background: #ffffff;
+    border: 1px solid var(--border-gold);
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 440px;
+    width: 100%;
+    margin: 20px auto;
+    box-shadow: 0 4px 15px rgba(109, 26, 44, 0.06);
+}
+.ucapan-form-box textarea, .ucapan-form-box input {
+    border: 1px solid #e2d5d8;
+    background-color: #fcfafa;
+    margin-bottom: 10px;
+}
+.btn-ucapan {
+    background-color: var(--primary-color);
+    color: white;
+    border: 1px solid var(--accent-gold);
+    padding: 12px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+}
+.btn-ucapan:hover {
+    background-color: #4e111f;
+}
+
+/* Senarai Ucapan */
+.ucapan-box {
+    max-width: 440px;
+    width: 100%;
+    margin: 20px auto 0;
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+.ucapan-box::-webkit-scrollbar { width: 5px; }
+.ucapan-box::-webkit-scrollbar-thumb { background: #d4b8be; border-radius: 10px; }
+
+.ucapan-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 12px;
+    text-align: left;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+    border: 1px solid #f2e9eb;
+    border-left: 3px solid var(--primary-color);
+}
+.ucapan-nama {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: var(--primary-color);
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+.ucapan-teks {
+    font-size: 0.88rem;
+    color: #555555;
+    line-height: 1.5;
+    font-style: italic;
+}
+
+/* Floating Music Button */
+#music-toggle {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    background-color: var(--primary-color);
+    color: var(--accent-gold-light);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    cursor: pointer;
+    z-index: 999;
+    font-size: 1.1rem;
+    border: 1.5px solid var(--accent-gold);
+}
+
+/* Bottom Nav */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 480px;
+    background-color: #ffffff;
+    box-shadow: 0 -2px 15px rgba(60, 12, 24, 0.1);
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 4px;
+    z-index: 1000;
+    border-top: 1.5px solid rgba(197, 155, 39, 0.35);
+}
+.bottom-nav a {
+    text-decoration: none;
+    color: #888888;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.68rem;
+    transition: color 0.3s;
+}
+.bottom-nav a i { font-size: 1.1rem; margin-bottom: 4px; }
+.bottom-nav a:hover, .bottom-nav a.active { color: var(--primary-color); }
